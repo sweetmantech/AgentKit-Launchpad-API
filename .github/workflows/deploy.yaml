@@ -38,8 +38,8 @@ jobs:
           script: |
             echo "Connected to Droplet"
             # Create app directory if it doesn't exist
-            mkdir -p ~/recoup-agent-chat
-            cd ~/recoup-agent-chat
+            mkdir -p ~/recoup-agent-apis
+            cd ~/recoup-agent-apis
 
             # Initialize git repository if it doesn't exist
             if [ ! -d .git ]; then
@@ -87,8 +87,8 @@ jobs:
             npm install
 
             # Start or restart the app using PM2
-            if pm2 list | grep -q "recoup-agent-chat"; then
-              pm2 restart recoup-agent-chat --update-env --cwd ~/recoup-agent-chat
+            if pm2 list | grep -q "recoup-agent-apis"; then
+              pm2 restart recoup-agent-apis --update-env --cwd ~/recoup-agent-apis
             else
-              pm2 start npm --name "recoup-agent-chat" --cwd ~/recoup-agent-chat -- run start
+              pm2 start npm --name "recoup-agent-apis" --cwd ~/recoup-agent-apis -- run start
             fi
