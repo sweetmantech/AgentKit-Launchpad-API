@@ -58,6 +58,28 @@ jobs:
             echo "Git status:"
             git status
 
+            sudo apt update -y
+            sudo apt install nginx -y
+            sudo rm /etc/nginx/sites-available/default #remove default config
+            sudo ln -s /etc/nginx/sites-available/your_domain.com /etc/nginx/sites-enabled/your_domain.com
+            #Write config file
+            sudo tee /etc/nginx/sites-available/your_domain.com > /dev/null <<EOF
+            server {
+                listen 80;
+                server_name your_domain.com; # Replace with your actual domain
+                location / {
+                    proxy_pass http://localhost:3000;
+                    proxy_http_version 1.1;
+                    proxy_set_header Upgrade $http_upgrade;
+                    proxy_set_header Connection 'upgrade';
+                    proxy_set_header Host $host;
+                    proxy_cache_bypass $http_upgrade;
+                    proxy_redirect off; #Important to prevent redirect loops
+                }
+            }
+            EOF
+            sudo systemctl restart nginx
+
             # Ensure correct Node.js version
             source ~/.nvm/nvm.sh
             nvm use 20
