@@ -55,31 +55,6 @@ jobs:
             echo "Git status:"
             git status
 
-            sudo apt update -y
-            sudo apt install nginx -y
-            if [ -f /etc/nginx/sites-available/default ]; then
-              sudo rm /etc/nginx/sites-available/default
-            fi
-            sudo rm -f /etc/nginx/sites-available/recoup-agent-api.com
-            sudo rm -f /etc/nginx/sites-enabled/recoup-agent-api.com
-            sudo ln -s /etc/nginx/sites-available/recoup-agent-api.com /etc/nginx/sites-enabled/recoup-agent-api.com
-            sudo tee /etc/nginx/sites-available/recoup-agent-api.com > /dev/null <<EOF
-            server {
-                listen 80;
-                server_name recoup-agent-api.com;
-                location / {
-                    proxy_pass http://localhost:3000;
-                    proxy_http_version 1.1;
-                    proxy_set_header Upgrade $http_upgrade;
-                    proxy_set_header Connection 'upgrade';
-                    proxy_set_header Host $host;
-                    proxy_cache_bypass $http_upgrade;
-                    proxy_redirect off;
-                }
-            }
-            EOF
-            sudo systemctl restart nginx
-
             # Ensure correct Node.js version
             source ~/.nvm/nvm.sh
             nvm use 20
