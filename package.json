@@ -2,18 +2,25 @@
   "name": "recoup-agent-chat",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node --experimental-specifier-resolution=node --no-warnings index.mjs",
-    "test": "echo \"No tests specified\" && exit 0"
+    "start": "nodemon --experimental-specifier-resolution=node --no-warnings app.js",
+    "test": "echo \"No tests specified\" && exit 0",
+    "format": "prettier --write app.js lib controllers"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apify-client": "^2.10.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.6",
     "express": "^4.21.1",
-    "openai": "^4.74.0"
+    "node-fetch": "^3.3.2",
+    "nodemon": "^3.1.7",
+    "openai": "^4.74.0",
+    "prettier": "^3.4.1"
   }
 }
