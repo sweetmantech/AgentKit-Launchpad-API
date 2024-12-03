@@ -57,12 +57,16 @@ jobs:
 
             sudo apt update -y
             sudo apt install nginx -y
-            sudo rm /etc/nginx/sites-available/default
-            sudo ln -s /etc/nginx/sites-available/your_domain.com /etc/nginx/sites-enabled/your_domain.com
-            sudo tee /etc/nginx/sites-available/your_domain.com > /dev/null <<EOF
+            if [ -f /etc/nginx/sites-available/default ]; then
+              sudo rm /etc/nginx/sites-available/default
+            fi
+            sudo rm -f /etc/nginx/sites-available/recoup-agent-api.com
+            sudo rm -f /etc/nginx/sites-enabled/recoup-agent-api.com
+            sudo ln -s /etc/nginx/sites-available/recoup-agent-api.com /etc/nginx/sites-enabled/recoup-agent-api.com
+            sudo tee /etc/nginx/sites-available/recoup-agent-api.com > /dev/null <<EOF
             server {
                 listen 80;
-                server_name your_domain.com;
+                server_name recoup-agent-api.com;
                 location / {
                     proxy_pass http://localhost:3000;
                     proxy_http_version 1.1;
