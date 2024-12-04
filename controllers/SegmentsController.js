@@ -48,7 +48,7 @@ export const get_next_steps = async (req, res) => {
           NOTE: ${REPORT_NEXT_STEP_NOTE}`,
       },
     ]);
-    if (content) res.status(200).json({ data: content });
+    if (content) return res.status(200).json({ data: content });
     return res.status(500).json({ error: "No content received from OpenAI" });
   } catch (error) {
     console.error(error);
@@ -70,8 +70,9 @@ export const get_segments = async (req, res) => {
       },
     ]);
 
+    console.log("ZIAD", content);
     if (content)
-      res.status(200).json({
+      return res.status(200).json({
         data:
           JSON.parse(
             content
@@ -103,7 +104,7 @@ export const get_segments_icons = async (req, res) => {
     ]);
 
     if (content)
-      res.status(200).json({
+      return res.status(200).json({
         data:
           JSON.parse(
             content
