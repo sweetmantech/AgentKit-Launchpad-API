@@ -70,6 +70,7 @@ export const get_segments = async (req, res) => {
       },
     ]);
 
+    console.log("ZIAD", content)
     if (content)
       res.status(200).json({
         data:
