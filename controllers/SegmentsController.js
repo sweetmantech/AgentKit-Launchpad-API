@@ -10,20 +10,23 @@ import getChatCompletions from "../lib/getChatCompletions.js";
 export const get_full_report = async (req, res) => {
   try {
     const data = req.body;
-    const content = await getChatCompletions([
-      {
-        role: "user",
-        content: `
+    const content = await getChatCompletions(
+      [
+        {
+          role: "user",
+          content: `
         Context: ${JSON.stringify(data)}
         Question: Please, create a tiktok fan segment report.`,
-      },
-      {
-        role: "system",
-        content: `${instructions.get_segements_report}
+        },
+        {
+          role: "system",
+          content: `${instructions.get_segements_report}
         ${HTML_RESPONSE_FORMAT_INSTRUCTIONS}
         NOTE: ${FULL_REPORT_NOTE}`,
-      },
-    ]);
+        },
+      ],
+      2222,
+    );
 
     if (content) return res.status(200).json({ content });
     return res.status(500).json({ error: "No content received from OpenAI" });
