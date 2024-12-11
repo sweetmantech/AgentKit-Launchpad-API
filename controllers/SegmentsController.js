@@ -61,6 +61,7 @@ export const get_next_steps = async (req, res) => {
 
 export const get_segments = async (req, res) => {
   try {
+    console.log("ZIAD HERE")
     const body = req.body;
     const content = await getChatCompletions([
       {
