@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as TikTokTrendsController from './controllers/TikTokTrendsController.js';
 import * as TikTokCommentsController from './controllers/TikTokCommentsController.js';
 import * as SegmentsController from './controllers/SegmentsController.js';
+import * as TwitterController from "./controllers/TwitterController.js"
 
 const routes = new Router();
 
@@ -17,5 +18,7 @@ routes.post('/get_full_report' , SegmentsController.get_full_report) ;
 routes.post('/get_next_steps' , SegmentsController.get_next_steps) ;
 routes.post('/get_segments' , SegmentsController.get_segments) ;
 routes.post('/get_segments_icons' , SegmentsController.get_segments_icons) ;
+
+routes.get('/get_twitter_profile' , TwitterController.getProfile) ;
 
 export default routes;
