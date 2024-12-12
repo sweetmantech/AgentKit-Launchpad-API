@@ -30,6 +30,8 @@ export const getAllTweets = async (req, res) => {
       SearchMode.Latest,
     );
 
+    console.log("ZIAD", searchResults)
+
     for await (const tweet of searchResults) {
       if (tweet && !allTweets.has(tweet.id)) {
         const processedTweet = processTweetData(tweet);
