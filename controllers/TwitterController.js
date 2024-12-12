@@ -17,7 +17,7 @@ export const getProfile = async (req, res) => {
 };
 
 export const getAllTweets = async (req, res) => {
-  const handle = req.query;
+  const { handle } = req.query;
   const allTweets = new Map();
   let previousCount = 0;
   let stagnantBatches = 0;
@@ -29,8 +29,6 @@ export const getAllTweets = async (req, res) => {
       MAX_TWEETS,
       SearchMode.Latest,
     );
-
-    console.log("ZIAD", searchResults)
 
     for await (const tweet of searchResults) {
       if (tweet && !allTweets.has(tweet.id)) {
