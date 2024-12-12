@@ -65,7 +65,7 @@ export const get_segments = async (req, res) => {
     const content = await getChatCompletions([
       {
         role: "user",
-        content: `Context: ${JSON.stringify(body)}`,
+        content: `Context: `,
       },
       {
         role: "system",
