@@ -22,9 +22,12 @@ export const getAllTweets = async (req, res) => {
   let previousCount = 0;
   let stagnantBatches = 0;
   const MAX_STAGNANT_BATCHES = 2;
+  const username = process.env.TWITTER_USERNAME;
+  const password = process.env.TWITTER_PASSWORD;
+  const email = process.env.TWITTER_EMAIL;
 
-  console.log("ZIAD", handle);
   try {
+    await scraper.login(username, password, email);
     const searchResults = scraper.searchTweets(
       `from:${handle}`,
       MAX_TWEETS,
