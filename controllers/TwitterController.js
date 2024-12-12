@@ -1,6 +1,6 @@
 import { Scraper, SearchMode } from "agent-twitter-client";
-import { MAX_TWEETS } from "../lib/consts";
-import processTweetData from "../lib/twitter/processTweetData";
+import { MAX_TWEETS } from "../lib/consts.js";
+import processTweetData from "../lib/twitter/processTweetData.js";
 
 const scraper = new Scraper();
 
