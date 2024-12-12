@@ -29,7 +29,7 @@ export const getAllTweets = async (req, res) => {
   try {
     await scraper.login(username, password, email);
     const searchResults = scraper.searchTweets(
-      `from:${handle}`,
+      `to:${handle}`,
       MAX_TWEETS,
       SearchMode.Latest,
     );
