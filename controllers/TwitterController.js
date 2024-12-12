@@ -23,6 +23,7 @@ export const getAllTweets = async (req, res) => {
   let stagnantBatches = 0;
   const MAX_STAGNANT_BATCHES = 2;
 
+  console.log("ZIAD", handle);
   try {
     const searchResults = scraper.searchTweets(
       `from:${handle}`,
