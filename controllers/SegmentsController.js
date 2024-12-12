@@ -62,11 +62,10 @@ export const get_next_steps = async (req, res) => {
 export const get_segments = async (req, res) => {
   try {
     const body = req.body;
-    console.log("ZIAD", body)
     const content = await getChatCompletions([
       {
         role: "user",
-        content: `Context: `,
+        content: `Context: ${JSON.stringify(body)}`,
       },
       {
         role: "system",
