@@ -20,6 +20,5 @@ routes.post('/get_segments' , SegmentsController.get_segments) ;
 routes.post('/get_segments_icons' , SegmentsController.get_segments_icons) ;
 
 routes.get('/get_twitter_profile' , TwitterController.getProfile) ;
-routes.get('/get_tweets' , TwitterController.getAllTweets) ;
 
 export default routes;
