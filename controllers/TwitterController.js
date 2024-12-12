@@ -17,7 +17,7 @@ export const getProfile = async (req, res) => {
 };
 
 export const getAllTweets = async (req, res) => {
-  const profile = req.body;
+  const handle = req.query;
   const allTweets = new Map();
   let previousCount = 0;
   let stagnantBatches = 0;
@@ -25,7 +25,7 @@ export const getAllTweets = async (req, res) => {
 
   try {
     const searchResults = scraper.searchTweets(
-      `from:${profile.username}`,
+      `from:${handle}`,
       MAX_TWEETS,
       SearchMode.Latest,
     );
