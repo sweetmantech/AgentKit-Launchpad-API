@@ -70,12 +70,10 @@ export const getAllTweets = async (req, res) => {
         }
       }
     }
-    return res
-      .status(200)
-      .json({
-        tweets: Array.from(allTweets.values()),
-        isNewLoggedIn: isLoadedCookies && isLoggedIn,
-      });
+    return res.status(200).json({
+      tweets: Array.from(allTweets.values()),
+      isAlreadyLoggedIn: isLoadedCookies && isLoggedIn,
+    });
   } catch (error) {
     return res.status(500).json({ error });
   }
