@@ -28,10 +28,19 @@ export const getAllTweets = async (req, res) => {
   const password = process.env.TWITTER_PASSWORD;
   const email = process.env.TWITTER_EMAIL;
 
-  const cookies_path = path.join(process.cwd(), "cookies", `${username}_cookies.json`);
+  const cookies_path = path.join(
+    process.cwd(),
+    "cookies",
+    `${username}_cookies.json`,
+  );
 
   try {
     // await scraper.setCookies(cookies);
+    fs.access(cookies_path);
+    const cookiesData = fs.readFile(cookies_path, "utf-8");
+    const cookies = JSON.parse(cookiesData);
+    console.log("ZIAD", cookies);
+    scraper.setCookies(cookies);
     const isLoggedIn = await scraper.isLoggedIn();
     console.log("ZIAD HERE", isLoggedIn);
     if (!isLoggedIn) {
@@ -41,7 +50,7 @@ export const getAllTweets = async (req, res) => {
         console.log("ZIAD HERE isNewLoggedIn");
         const cookies = await scraper.getCookies();
         console.log("ZIAD HERE cookies", cookies);
-        console.log("ZIAD COOKIE STRINGIFY", JSON.stringify(cookies))
+        console.log("ZIAD COOKIE STRINGIFY", JSON.stringify(cookies));
         fs.mkdir(path.dirname(cookies_path), { recursive: true });
         fs.writeFile(cookies_path, JSON.stringify(cookies));
       }
@@ -82,6 +91,7 @@ export const getAllTweets = async (req, res) => {
       isAlreadyLoggedIn: isLoadedCookies && isLoggedIn,
     });
   } catch (error) {
+    console.log("ZAID ERROR", error);
     return res.status(500).json({ error });
   }
 };
