@@ -36,11 +36,15 @@ export const getAllTweets = async (req, res) => {
 
   try {
     // await scraper.setCookies(cookies);
-    await fs.access(cookies_path);
-    const cookiesData = await fs.readFile(cookies_path, "utf-8");
-    const cookies = JSON.parse(cookiesData);
-    console.log("ZIAD", cookies);
-    scraper.setCookies(cookies);
+    try {
+      await fs.access(cookies_path);
+      const cookiesData = await fs.readFile(cookies_path, "utf-8");
+      const cookies = JSON.parse(cookiesData);
+      console.log("ZIAD", cookies);
+      scraper.setCookies(cookies);
+    } catch (error) {
+      console.log("ZAID ERROR", error);
+    }
     const isLoggedIn = await scraper.isLoggedIn();
     console.log("ZIAD HERE", isLoggedIn);
     if (!isLoggedIn) {
