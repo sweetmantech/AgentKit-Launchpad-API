@@ -35,7 +35,7 @@ export const get_dataset_items = async (req, res) => {
       .status(200)
       .json({ success: true, data: formattedData?.[0] || null });
   } catch (error) {
-    console.error(error);
+    console.error("ZIAD", error);
     return res.status(500).json({ error });
   }
 };
