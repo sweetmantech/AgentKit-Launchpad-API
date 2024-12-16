@@ -2,6 +2,7 @@ import getActorStatus from "../lib/apify/getActorStatus.js";
 import getDataset from "../lib/apify/getDataset.js";
 import getFormattedAccountInfo from "../lib/apify/getFormattedAccountInfo.js";
 import runTikTokActor from "../lib/apify/runTikTokActor.js";
+import { UNKNOWN_PROFILE_ERROR } from "../lib/twitter/errors.js";
 
 export const get_tiktok_account_trends = async (req, res) => {
   const { handle } = req.query;
@@ -30,7 +31,8 @@ export const get_dataset_items = async (req, res) => {
 
   try {
     const data = await getDataset(datasetId);
-    console.log("ZIAD", data)
+    if (data?.[0]?.error === UNKNOWN_PROFILE_ERROR)
+      return res.status(500).json({ error: UNKNOWN_PROFILE_ERROR });
     const formattedData = getFormattedAccountInfo(data);
     return res
       .status(200)
