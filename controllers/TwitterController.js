@@ -2,7 +2,7 @@ import { Scraper, SearchMode } from "agent-twitter-client";
 import { MAX_TWEETS } from "../lib/consts.js";
 import processTweetData from "../lib/twitter/processTweetData.js";
 import path from "path";
-import fs from "fs";
+import fs from "fs/promises";
 
 const scraper = new Scraper();
 
@@ -36,8 +36,8 @@ export const getAllTweets = async (req, res) => {
 
   try {
     // await scraper.setCookies(cookies);
-    fs.access(cookies_path);
-    const cookiesData = fs.readFile(cookies_path, "utf-8");
+    await fs.access(cookies_path);
+    const cookiesData = await fs.readFile(cookies_path, "utf-8");
     const cookies = JSON.parse(cookiesData);
     console.log("ZIAD", cookies);
     scraper.setCookies(cookies);
@@ -51,8 +51,8 @@ export const getAllTweets = async (req, res) => {
         const cookies = await scraper.getCookies();
         console.log("ZIAD HERE cookies", cookies);
         console.log("ZIAD COOKIE STRINGIFY", JSON.stringify(cookies));
-        fs.mkdir(path.dirname(cookies_path), { recursive: true });
-        fs.writeFile(cookies_path, JSON.stringify(cookies));
+        await fs.mkdir(path.dirname(cookies_path), { recursive: true });
+        await fs.writeFile(cookies_path, JSON.stringify(cookies));
       }
     }
 
