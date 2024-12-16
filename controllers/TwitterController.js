@@ -2,8 +2,7 @@ import { Scraper, SearchMode } from "agent-twitter-client";
 import { MAX_TWEETS } from "../lib/consts.js";
 import processTweetData from "../lib/twitter/processTweetData.js";
 import path from "path";
-import saveCookies from "../lib/twitter/saveCookies.js";
-import loadCookies from "../lib/twitter/loadCookies.js";
+import fs from 'fs';
 
 const scraper = new Scraper();
 
@@ -30,7 +29,6 @@ export const getAllTweets = async (req, res) => {
   const email = process.env.TWITTER_EMAIL;
 
   const cookies_path = path.join(
-    process.cwd(),
     "cookies",
     `${username}_cookies.json`,
   );
@@ -41,9 +39,21 @@ export const getAllTweets = async (req, res) => {
     await scraper.setCookies(cookies);
     const isLoggedIn = await scraper.isLoggedIn();
     console.log("ZIAD HERE", isLoggedIn);
-    if (!isLoggedIn)
+    if (!isLoggedIn) {
       await scraper.login(username, password, email);
+      const isNewLoggedIn = await scraper.isLoggedIn();
+      if (isNewLoggedIn) {
+        const cookies = await scraper.getCookies();
+        fs.mkdir(path.dirname(cookies_path), { recursive: true });
+        fs.writeFile(cookies_path, JSON.stringify(cookies));
+      }
+    }
+      
 
+    const newCookies = await scraper.getCookies();
+    console.log("ZIAD COOKIES", newCookies)
+
+    return res.json({status: true})
     const searchResults = scraper.searchTweets(
       `to:${handle}`,
       MAX_TWEETS,
