@@ -30,6 +30,7 @@ export const get_dataset_items = async (req, res) => {
 
   try {
     const data = await getDataset(datasetId);
+    console.log("ZIAD", data)
     const formattedData = getFormattedAccountInfo(data);
     return res
       .status(200)
