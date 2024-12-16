@@ -2,7 +2,6 @@ import { Scraper, SearchMode } from "agent-twitter-client";
 import { MAX_TWEETS } from "../lib/consts.js";
 import processTweetData from "../lib/twitter/processTweetData.js";
 import path from "path";
-import fs from "fs";
 import saveCookies from "../lib/twitter/saveCookies.js";
 import loadCookies from "../lib/twitter/loadCookies.js";
 
@@ -38,11 +37,8 @@ export const getAllTweets = async (req, res) => {
 
   try {
     const isLoadedCookies = await loadCookies(scraper, cookies_path);
-    console.log("ZIAD IS LOADED COOKIES", isLoadedCookies);
-    return res.status(500).json({ error });
     const isLoggedIn = await scraper.isLoggedIn();
     if (!isLoadedCookies || !isLoggedIn) {
-      console.log("ZIAD LOGGED IN NEWLY");
       await scraper.login(username, password, email);
       const isNewLoggedIn = await scraper.isLoggedIn();
       if (isNewLoggedIn) await saveCookies(scraper, cookies_path);
@@ -74,7 +70,12 @@ export const getAllTweets = async (req, res) => {
         }
       }
     }
-    return res.status(200).json({ tweets: Array.from(allTweets.values()) });
+    return res
+      .status(200)
+      .json({
+        tweets: Array.from(allTweets.values()),
+        isNewLoggedIn: isLoadedCookies && isLoggedIn,
+      });
   } catch (error) {
     return res.status(500).json({ error });
   }
