@@ -29,11 +29,15 @@ export const getAllTweets = async (req, res) => {
   const password = process.env.TWITTER_PASSWORD;
   const email = process.env.TWITTER_EMAIL;
 
+  console.log("ZIAD IS NOT LOGGED IN")
+
   const cookies_path = path.join(
     process.cwd(),
     "cookies",
     `${username}_cookies.json`,
   );
+
+  console.log(cookies_path)
 
   try {
     await loadCookies(scraper);
