@@ -38,11 +38,9 @@ export const getAllTweets = async (req, res) => {
   try {
     const isLoadedCookies = await loadCookies(scraper, cookies_path);
     const isLoggedIn = await scraper.isLoggedIn();
-    if (!isLoadedCookies || !isLoggedIn) {
+    console.log("ZIAD HERE", isLoadedCookies, isLoggedIn);
+    if (!isLoadedCookies || !isLoggedIn)
       await scraper.login(username, password, email);
-      const isNewLoggedIn = await scraper.isLoggedIn();
-      if (isNewLoggedIn) await saveCookies(scraper, cookies_path);
-    }
 
     const searchResults = scraper.searchTweets(
       `to:${handle}`,
