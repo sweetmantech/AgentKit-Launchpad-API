@@ -28,7 +28,7 @@ export const getAllTweets = async (req, res) => {
   const password = process.env.TWITTER_PASSWORD;
   const email = process.env.TWITTER_EMAIL;
 
-  const cookies_path = path.join("cookies", `${username}_cookies.json`);
+  const cookies_path = path.join(process.cwd(), "cookies", `${username}_cookies.json`);
 
   try {
     // await scraper.setCookies(cookies);
@@ -40,6 +40,8 @@ export const getAllTweets = async (req, res) => {
       if (isNewLoggedIn) {
         console.log("ZIAD HERE isNewLoggedIn");
         const cookies = await scraper.getCookies();
+        console.log("ZIAD HERE cookies", cookies);
+        console.log("ZIAD COOKIE STRINGIFY", JSON.stringify(cookies))
         fs.mkdir(path.dirname(cookies_path), { recursive: true });
         fs.writeFile(cookies_path, JSON.stringify(cookies));
       }
