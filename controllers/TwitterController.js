@@ -31,7 +31,7 @@ export const getAllTweets = async (req, res) => {
   const email = process.env.TWITTER_EMAIL;
 
   const cookies_path = path.join(
-    path.dirname(__dirname),
+    process.cwd(),
     "cookies",
     `${username}_cookies.json`,
   );
