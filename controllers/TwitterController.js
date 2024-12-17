@@ -35,11 +35,11 @@ export const getAllTweets = async (req, res) => {
   );
 
   try {
-    // await scraper.setCookies(cookies);
     try {
       await fs.access(cookies_path);
       const cookiesData = await fs.readFile(cookies_path, "utf-8");
       const cookies = JSON.parse(cookiesData);
+      console.log("ZIAD COOKIES", cookies)
       scraper.setCookies(cookies);
     } catch (error) {
       console.log("ZAID ERROR", error);
@@ -56,7 +56,7 @@ export const getAllTweets = async (req, res) => {
         console.log("ZIAD HERE cookies", cookiesString);
         console.log("ZIAD COOKIE STRINGIFY", JSON.stringify(cookiesString));
         await fs.mkdir(path.dirname(cookies_path), { recursive: true });
-        await fs.writeFile(cookies_path, JSON.stringify(cookies));
+        await fs.writeFile(cookies_path, JSON.stringify(cookiesString));
       }
     }
 
