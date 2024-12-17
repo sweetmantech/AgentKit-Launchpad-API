@@ -3,6 +3,8 @@ import { MAX_TWEETS } from "../lib/consts.js";
 import processTweetData from "../lib/twitter/processTweetData.js";
 import path from "path";
 import fs from "fs/promises";
+import loadCookies from "../lib/twitter/loadCookies.js";
+import saveCookies from "../lib/twitter/saveCookies.js";
 
 const scraper = new Scraper();
 
@@ -35,23 +37,12 @@ export const getAllTweets = async (req, res) => {
   );
 
   try {
-    try {
-      await fs.access(cookies_path);
-      const cookiesData = await fs.readFile(cookies_path, "utf-8");
-      const cookies = JSON.parse(cookiesData);
-      await scraper.setCookies(cookies);
-    } catch (error) {
-    }
+    const isLoadedCookies = await loadCookies(scraper, cookies_path);
     const isLoggedIn = await scraper.isLoggedIn();
     if (!isLoggedIn) {
       await scraper.login(username, password, email);
       const isNewLoggedIn = await scraper.isLoggedIn();
-      if (isNewLoggedIn) {
-        const cookies = await scraper.getCookies();
-        const cookiesString = cookies.map((cookie) => cookie.toString());
-        await fs.mkdir(path.dirname(cookies_path), { recursive: true });
-        await fs.writeFile(cookies_path, JSON.stringify(cookiesString));
-      }
+      if (isNewLoggedIn) await saveCookies(scraper, cookies_path);
     }
 
     const searchResults = scraper.searchTweets(
@@ -82,7 +73,7 @@ export const getAllTweets = async (req, res) => {
     }
     return res.status(200).json({
       tweets: Array.from(allTweets.values()),
-      isAlreadyLoggedIn: isLoggedIn,
+      isAlreadyLoggedIn: isLoadedCookies && isLoggedIn,
     });
   } catch (error) {
     return res.status(500).json({ error });
