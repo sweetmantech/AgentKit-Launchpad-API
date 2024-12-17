@@ -2,7 +2,6 @@ import { Scraper, SearchMode } from "agent-twitter-client";
 import { MAX_TWEETS } from "../lib/consts.js";
 import processTweetData from "../lib/twitter/processTweetData.js";
 import path from "path";
-import fs from "fs/promises";
 import loadCookies from "../lib/twitter/loadCookies.js";
 import saveCookies from "../lib/twitter/saveCookies.js";
 
