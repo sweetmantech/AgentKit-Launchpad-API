@@ -37,7 +37,7 @@ export const getAllTweets = async (req, res) => {
   );
 
   try {
-    const isLoadedCookies = await loadCookies(scraper, cookies_path);
+    await loadCookies(scraper, cookies_path);
     const isLoggedIn = await scraper.isLoggedIn();
     if (!isLoggedIn) {
       await scraper.login(username, password, email);
@@ -73,7 +73,6 @@ export const getAllTweets = async (req, res) => {
     }
     return res.status(200).json({
       tweets: Array.from(allTweets.values()),
-      isAlreadyLoggedIn: isLoadedCookies && isLoggedIn,
     });
   } catch (error) {
     return res.status(500).json({ error });
