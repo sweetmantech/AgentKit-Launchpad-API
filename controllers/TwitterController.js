@@ -1,6 +1,9 @@
 import { Scraper, SearchMode } from "agent-twitter-client";
 import { MAX_TWEETS } from "../lib/consts.js";
 import processTweetData from "../lib/twitter/processTweetData.js";
+import path from "path";
+import loadCookies from "../lib/twitter/loadCookies.js";
+import saveCookies from "../lib/twitter/saveCookies.js";
 
 const scraper = new Scraper();
 
@@ -26,8 +29,21 @@ export const getAllTweets = async (req, res) => {
   const password = process.env.TWITTER_PASSWORD;
   const email = process.env.TWITTER_EMAIL;
 
+  const cookies_path = path.join(
+    process.cwd(),
+    "cookies",
+    `${username}_cookies.json`,
+  );
+
   try {
-    await scraper.login(username, password, email);
+    await loadCookies(scraper, cookies_path);
+    const isLoggedIn = await scraper.isLoggedIn();
+    if (!isLoggedIn) {
+      await scraper.login(username, password, email);
+      const isNewLoggedIn = await scraper.isLoggedIn();
+      if (isNewLoggedIn) await saveCookies(scraper, cookies_path);
+    }
+
     const searchResults = scraper.searchTweets(
       `to:${handle}`,
       MAX_TWEETS,
@@ -54,7 +70,9 @@ export const getAllTweets = async (req, res) => {
         }
       }
     }
-    return res.status(200).json({ tweets: Array.from(allTweets.values()) });
+    return res.status(200).json({
+      tweets: Array.from(allTweets.values()),
+    });
   } catch (error) {
     return res.status(500).json({ error });
   }
