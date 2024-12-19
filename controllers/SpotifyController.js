@@ -7,6 +7,7 @@ export const getProfile = async (req, res) => {
   console.log("ZIAD", accessToken);
   const artist = await searchArtist(handle, accessToken);
   console.log("ZIAD", artist);
+  if (artist?.error) return res.status(500).json({ error: artist?.error });
 
   try {
     return res.status(200).json({ profile: {} });
