@@ -10,7 +10,7 @@ export const getProfile = async (req, res) => {
     return res.status(200).json({
       profile: {
         name: artist.name,
-        image: artist.images?.[0] || "",
+        image: artist.images?.[0]?.url || "",
         fans: artist.followers.total,
         id: artist.id,
       },
