@@ -4,13 +4,17 @@ import getAccessToken from "../lib/supabase/getAccessToken.js";
 export const getProfile = async (req, res) => {
   const { handle } = req.query;
   const accessToken = await getAccessToken();
-  console.log("ZIAD", accessToken);
   const artist = await searchArtist(handle, accessToken);
-  console.log("ZIAD", artist);
   if (artist?.error) return res.status(500).json({ error: artist?.error });
-
   try {
-    return res.status(200).json({ profile: {} });
+    return res.status(200).json({
+      profile: {
+        name: artist.name,
+        image: artist.images?.[0] || "",
+        fans: artist.followers.total,
+        id: artist.id,
+      },
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error });
