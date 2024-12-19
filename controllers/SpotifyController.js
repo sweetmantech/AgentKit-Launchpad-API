@@ -13,6 +13,7 @@ export const getProfile = async (req, res) => {
         image: artist.images?.[0]?.url || "",
         fans: artist.followers.total,
         id: artist.id,
+        external_urls: artist.external_urls
       },
     });
   } catch (error) {
