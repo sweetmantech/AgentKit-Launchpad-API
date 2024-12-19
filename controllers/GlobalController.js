@@ -1,4 +1,5 @@
 import getActorStatus from "../lib/apify/getActorStatus.js";
+import getDataset from "../lib/apify/getDataset.js";
 
 export const get_dataset_status = async (req, res) => {
   const { datasetId } = req.query;
@@ -20,11 +21,11 @@ export const get_dataset_items = async (req, res) => {
 
   try {
     const data = await getDataset(datasetId);
-    console.log("ZIAD HERE", data?.[0]?.error)
     if (data?.[0]?.error)
       return res.status(500).json({ error: data?.[0]?.error });
     return res.status(200).json({ success: true, data });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ error });
   }
 };
