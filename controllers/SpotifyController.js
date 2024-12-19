@@ -1,4 +1,5 @@
 import getAlbums from "../lib/spotify/getAlbums.js";
+import getTopTracks from "../lib/spotify/getTopTracks.js";
 import searchArtist from "../lib/spotify/searchArtist.js";
 import getAccessToken from "../lib/supabase/getAccessToken.js";
 
@@ -30,6 +31,19 @@ export const getArtistAlbums = async (req, res) => {
   if (albums?.error) return res.status(500).json({ error: albums?.error });
   try {
     return res.status(200).json({ albums });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error });
+  }
+};
+
+export const getArtistTracks = async (req, res) => {
+  const { artistId } = req.query;
+  const accessToken = await getAccessToken();
+  const tracks = await getTopTracks(artistId, accessToken);
+  if (tracks?.error) return res.status(500).json({ error: tracks?.error });
+  try {
+    return res.status(200).json({ tracks });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error });
