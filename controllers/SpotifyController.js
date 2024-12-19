@@ -8,7 +8,13 @@ export const getProfile = async (req, res) => {
   if (artist?.error) return res.status(500).json({ error: artist?.error });
   try {
     return res.status(200).json({
-      profile: artist,
+      profile: {
+        name: artist.name,
+        image: artist.images?.[0]?.url || "",
+        fans: artist.followers.total,
+        id: artist.id,
+        external_urls: artist.external_urls,
+      },
     });
   } catch (error) {
     console.error(error);
