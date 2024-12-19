@@ -31,7 +31,7 @@ routes.get('/get_artist_tracks' , SpotifyController.getArtistTracks) ;
 
 routes.get('/get_instagram_profile', InstagramController.get_instagram_account_profile);
 
-routes.get('/get_dataset_status', GlobalController.get_dataset_status);
+routes.get('/get_dataset_items', GlobalController.get_dataset_status);
 routes.get('/get_dataset_status', GlobalController.get_dataset_items);
 
 
