@@ -32,9 +32,7 @@ socketIo.on("connection", async (socket) => {
   socket.emit("getId", socket.id);
 
   socket.on("Tiktok Analysis", async (_, msg) => {
-    if (!msg?.handle || !msg?.chat_id) {
-      getTikTokAnalysis(handle, chat_id);
-    }
+    if (!msg?.handle || !msg?.chat_id) getTikTokAnalysis(handle, chat_id);
   });
 
   socket.on("disconnect", () => {
