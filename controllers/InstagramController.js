@@ -49,3 +49,24 @@ export const get_instagram_reels = async (req, res) => {
     return res.status(500).json({ error });
   }
 };
+
+export const get_instagram_comments = async (req, res) => {
+  const { directUrls } = req.query;
+
+  const input = {
+    directUrls,
+    resultsLimit: 100,
+  };
+
+  try {
+    const defaultDatasetId = await runTikTokActor(
+      input,
+      "apify~instagram-comment-scraper",
+    );
+
+    return res.status(200).json({ success: true, data: defaultDatasetId });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error });
+  }
+};
