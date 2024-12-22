@@ -52,6 +52,7 @@ export const get_instagram_reels = async (req, res) => {
 
 export const get_instagram_comments = async (req, res) => {
   const { directUrls } = req.body;
+  console.log("ZIAD", req.body);
 
   const input = {
     directUrls,
