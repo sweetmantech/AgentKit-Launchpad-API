@@ -28,6 +28,7 @@ const getTikTokAnalysis = async (handle, chat_id) => {
     console.log("ZIAD SEGMENTS", segmentsWithIcons) ;
     return
   } catch(error) {
+    console.log(error)
     throw new Error(error)
   }
 }
