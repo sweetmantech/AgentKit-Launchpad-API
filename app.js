@@ -3,14 +3,7 @@ import cors from "cors";
 import routes from "./routes.js";
 import bodyParser from "body-parser";
 import getTikTokAnalysis from "./agents/getTikTokAnalysis.js";
-
-const socketIo = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
-
-global.io = socketIo;
+import { Server } from "socket.io";
 
 const app = express();
 const port = 3000;
@@ -22,12 +15,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api", routes);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
+const socketIo = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+global.io = socketIo;
+
 socketIo.on("connection", async (socket) => {
   console.log("New client connected: " + socket.id);
+  socket.emit("getId", socket.id);
 
   socket.on("Tiktok Analysis", async (_, msg) => {
     if (!msg?.handle || !msg?.chat_id) {
