@@ -32,6 +32,7 @@ socketIo.on("connection", async (socket) => {
   socket.emit("getId", socket.id);
 
   socket.on("Tiktok Analysis", async (_, msg) => {
+    console.log("ZIAD RUN Tiktok Analysis", msg);
     if (!msg?.handle || !msg?.chat_id) getTikTokAnalysis(handle, chat_id);
   });
 
