@@ -51,7 +51,7 @@ export const get_instagram_reels = async (req, res) => {
 };
 
 export const get_instagram_comments = async (req, res) => {
-  const { directUrls } = req.query;
+  const { directUrls } = req.body;
 
   const input = {
     directUrls,
