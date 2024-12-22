@@ -10,7 +10,7 @@ const getTikTokAnalysis = async (handle, chat_id) => {
   try {
     console.log("ZIAD START")
     const profileDatasetId = await getProfileDatasetId(handle);
-    console.log("ZIAD PROFILE DATASET ID");
+    console.log("ZIAD PROFILE DATASET ID", profileDatasetId);
     global.io.emit(`${chat_id}` , { status: STEP_OF_ANALYSIS.PROFILE }) ;
     const profile = await getProfile(profileDatasetId);
     console.log("ZIAD PROFILE");
