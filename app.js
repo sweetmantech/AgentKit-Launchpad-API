@@ -31,7 +31,7 @@ socketIo.on("connection", async (socket) => {
   console.log("New client connected: " + socket.id);
 
   socket.on("TiktokAnalysis", (_, msg) => {
-    if (!msg?.handle || !msg?.chat_id) getTikTokAnalysis(handle, chat_id);
+    if (msg?.handle && msg?.chat_id) getTikTokAnalysis(handle, chat_id);
   });
 
   socket.on("disconnect", () => {
