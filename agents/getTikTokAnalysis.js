@@ -13,7 +13,7 @@ const getTikTokAnalysis = async (handle, chat_id) => {
     console.log("ZIAD PROFILE DATASET ID", profileDatasetId);
     global.io.emit(`${chat_id}` , { status: STEP_OF_ANALYSIS.PROFILE }) ;
     const profile = await getProfile(profileDatasetId);
-    console.log("ZIAD PROFILE");
+    console.log("ZIAD PROFILE", profile);
     const videoComments = await getVideoComments(profile?.videos, chat_id);
     const avatar = await uploadPfpToIpfs(profile.avatar);
     console.log("ZIAD AVATAR", avatar);
