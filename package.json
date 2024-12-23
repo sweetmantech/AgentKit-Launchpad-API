@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon --experimental-specifier-resolution=node --no-warnings app.js",
     "test": "echo \"No tests specified\" && exit 0",
-    "format": "prettier --write app.js lib controllers"
+    "format": "prettier --write app.js lib controllers agents"
   },
   "keywords": [],
   "author": "",
