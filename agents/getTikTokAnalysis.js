@@ -38,7 +38,7 @@ const getTikTokAnalysis = async (handle, chat_id, account_id) => {
       `https://tiktok.com/@${profile?.name}`,
       account_id,
     );
-    console.log("ZIAD", artistId);
+    console.log("ZIAD ARTIST ID", artistId);
     global.io.emit(`${chat_id}`, { status: STEP_OF_ANALYSIS.SAVING_ANALYSIS });
     const analysis = {
       ...profileWithComments,
