@@ -60,7 +60,6 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     );
     global.io.emit(`${chat_id}`, {
       status: STEP_OF_ANALYSIS.FINISHED,
-      artistId: newArtist.id,
     });
     return;
   } catch (error) {
