@@ -4,9 +4,12 @@ import routes from "./routes.js";
 import bodyParser from "body-parser";
 import getTikTokAnalysis from "./agents/getTikTokAnalysis.js";
 import { Server } from "socket.io";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: false, limit: "10mb" }));
