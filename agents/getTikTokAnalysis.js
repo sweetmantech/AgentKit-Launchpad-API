@@ -29,6 +29,7 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
       chat_id,
       analysisId,
     );
+    console.log("ZIAD HERE", videoComments.length);
     await saveFunnelComments(videoComments);
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
     const segments = await getSegments(videoComments);
