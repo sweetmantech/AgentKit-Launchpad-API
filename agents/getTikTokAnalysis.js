@@ -24,12 +24,6 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     const profile = accountData?.profile?.[0];
     const videoUrls = accountData?.videoUrls;
     const avatar = await uploadPfpToIpfs(profile.avatar);
-    await saveFunnelProfile({
-      ...profile,
-      avatar,
-      type: "TIKTOK",
-      analysis_id: analysisId,
-    });
     const videoComments = await getVideoComments(
       videoUrls,
       chat_id,
@@ -41,16 +35,29 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
     await saveFunnelSegments(segmentsWithIcons);
     global.io.emit(`${chat_id}`, { status: STEP_OF_ANALYSIS.CREATING_ARTIST });
-    const artistId = await saveFunnelArtist(
+    const newArtist = await saveFunnelArtist(
       Funnel_Type.TIKTOK,
       profile?.nickname,
       profile?.avatar,
       `https://tiktok.com/@${profile?.name}`,
       account_id,
     );
+    await saveFunnelProfile({
+      ...profile,
+      avatar,
+      type: "TIKTOK",
+      analysis_id: analysisId,
+      artistId: newArtist.id,
+    });
     global.io.emit(`${chat_id}`, { status: STEP_OF_ANALYSIS.SAVING_ANALYSIS });
     await completeAnalysis(analysisId);
-    await trackFunnelAnalysisChat(address, handle, artistId, chat_id, "TikTok");
+    await trackFunnelAnalysisChat(
+      address,
+      handle,
+      newArtist?.id,
+      chat_id,
+      "TikTok",
+    );
     global.io.emit(`${chat_id}`, {
       status: STEP_OF_ANALYSIS.FINISHED,
       artistId,
