@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import getTikTokAnalysis from "./agents/getTikTokAnalysis.js";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
+import getInstagramAnalysis from "./agents/getInstagramAnalysis.js";
 
 dotenv.config();
 
@@ -33,9 +34,19 @@ global.io = socketIo;
 socketIo.on("connection", async (socket) => {
   console.log("New client connected: " + socket.id);
 
-  socket.on("TiktokAnalysis", (_, msg) => {
+  socket.on("TIKTOK_ANALYSIS", (_, msg) => {
     if (msg?.handle && msg?.chat_id && msg?.account_id && msg?.address)
       getTikTokAnalysis(
+        msg?.handle,
+        msg?.chat_id,
+        msg?.account_id,
+        msg?.address,
+      );
+  });
+
+  socket.on("INSTAGRAM_ANALYSIS", (_, msg) => {
+    if (msg?.handle && msg?.chat_id && msg?.account_id && msg?.address)
+      getInstagramAnalysis(
         msg?.handle,
         msg?.chat_id,
         msg?.account_id,
