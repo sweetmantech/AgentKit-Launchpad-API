@@ -53,7 +53,6 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
       analysis_id: analysisId,
       artistId: newArtist.id,
     });
-    global.io.emit(`${chat_id}`, { status: STEP_OF_ANALYSIS.SAVING_ANALYSIS });
     await updateAnalysisStatus(
       chat_id,
       analysisId,
