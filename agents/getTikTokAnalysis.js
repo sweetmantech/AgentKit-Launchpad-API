@@ -2,6 +2,7 @@ import { Funnel_Type } from "../lib/funnels.js";
 import getSegments from "../lib/getSegments.js";
 import getSegmentsWithIcons from "../lib/getSegmentsWithIcons.js";
 import uploadPfpToIpfs from "../lib/ipfs/uploadPfpToIpfs.js";
+import trackFunnelAnalysisChat from "../lib/stack/trackFunnelAnalysisChat.js";
 import { STEP_OF_ANALYSIS } from "../lib/step.js";
 import beginAnalysis from "../lib/supabase/beginAnalysis.js";
 import completeAnalysis from "../lib/supabase/completeAnalysis.js";
@@ -13,7 +14,7 @@ import getProfile from "../lib/tiktok/getProfile.js";
 import getProfileDatasetId from "../lib/tiktok/getProfileDatasetId.js";
 import getVideoComments from "../lib/tiktok/getVideoComments.js";
 
-const getTikTokAnalysis = async (handle, chat_id, account_id) => {
+const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
   try {
     const newAnalysis = await beginAnalysis(chat_id);
     const analysisId = newAnalysis.id;
@@ -49,6 +50,7 @@ const getTikTokAnalysis = async (handle, chat_id, account_id) => {
     );
     global.io.emit(`${chat_id}`, { status: STEP_OF_ANALYSIS.SAVING_ANALYSIS });
     await completeAnalysis(analysisId);
+    await trackFunnelAnalysisChat(address, handle, artistId, chat_id, "TikTok");
     global.io.emit(`${chat_id}`, {
       status: STEP_OF_ANALYSIS.FINISHED,
       artistId,
