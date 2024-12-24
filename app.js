@@ -34,7 +34,7 @@ global.io = socketIo;
 socketIo.on("connection", async (socket) => {
   console.log("New client connected: " + socket.id);
 
-  socket.on("TIKTOKAnalysis", (_, msg) => {
+  socket.on("TIKTOK_ANALYSIS", (_, msg) => {
     if (msg?.handle && msg?.chat_id && msg?.account_id && msg?.address)
       getTikTokAnalysis(
         msg?.handle,
@@ -44,7 +44,7 @@ socketIo.on("connection", async (socket) => {
       );
   });
 
-  socket.on("INSTAGRAMAnalysis", (_, msg) => {
+  socket.on("INSTAGRAM_ANALYSIS", (_, msg) => {
     if (msg?.handle && msg?.chat_id && msg?.account_id && msg?.address)
       getInstagramAnalysis(
         msg?.handle,
