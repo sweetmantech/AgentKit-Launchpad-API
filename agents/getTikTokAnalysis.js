@@ -16,7 +16,7 @@ import getVideoComments from "../lib/tiktok/getVideoComments.js";
 
 const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
   try {
-    const newAnalysis = await beginAnalysis(chat_id);
+    const newAnalysis = await beginAnalysis(chat_id, handle);
     const analysisId = newAnalysis.id;
     const profileDatasetId = await getProfileDatasetId(handle);
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.PROFILE);
