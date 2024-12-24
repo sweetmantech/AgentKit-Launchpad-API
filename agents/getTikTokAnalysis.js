@@ -38,7 +38,7 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     const newArtist = await saveFunnelArtist(
       Funnel_Type.TIKTOK,
       profile?.nickname,
-      profile?.avatar,
+      avatar,
       `https://tiktok.com/@${profile?.name}`,
       account_id,
     );
