@@ -24,14 +24,11 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
     const data = await getProfile(handle, accessToken);
     const profile = data.profile;
     const artistUri = data.artistId;
-    console.log("ZIAD PROFILE", profile, artistUri);
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.ALBUMS);
     const albums = await getAlbums(artistUri, accessToken, analysisId);
-    console.log("ZIAD ALBUMS", albums);
     await saveSpotifyAlbums(albums);
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.TRACKS);
     const tracks = await getTopTracks(artistUri, accessToken, analysisId);
-    console.log("ZIAD TRACKS", tracks);
     await saveSpotifyTracks(tracks);
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
     const segments = await getSegments([...tracks, ...albums]);
