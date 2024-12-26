@@ -23,13 +23,14 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.PROFILE);
     const profile = await scraper.getProfile(handle);
     console.log("ZIAD PROFILE", profile);
-    // const allTweets = await getAllTweets(scraper, handle);
+    
     // const avatar = await uploadPfpToIpfs(profile.avatar);
-    // const videoComments = await getVideoComments(
-    //   videoUrls,
-    //   chat_id,
-    //   analysisId,
-    // );
+    // const allTweets = await getAllTweets(scraper, handle);
+    // const comments =  allTweets?.map((tweet) => ({
+    //   comment: tweet.text,
+    //   created_at: new Date(tweet.createdAt).getTime(),
+    //   username: tweet.username,
+    // }));
     // await saveFunnelComments(videoComments);
     // await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
     // const segments = await getSegments(videoComments);
