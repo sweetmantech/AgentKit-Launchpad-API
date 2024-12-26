@@ -11,6 +11,7 @@ import saveFunnelSegments from "../lib/supabase/saveFunnelSegments.js";
 import { Funnel_Type } from "../lib/funnels.js";
 import saveFunnelProfile from "../lib/supabase/saveFunnelProfile.js";
 import trackFunnelAnalysisChat from "../lib/stack/trackFunnelAnalysisChat.js";
+import saveFunnelArtist from "../lib/supabase/saveFunnelArtist.js";
 
 const scraper = new Scraper();
 
