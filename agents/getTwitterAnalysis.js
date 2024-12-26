@@ -36,7 +36,7 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
       STEP_OF_ANALYSIS.POST_COMMENTS,
     );
     const allTweets = await getAllTweets(scraper, handle);
-    const comments = getTwitterComments(allTweets);
+    const comments = getTwitterComments(allTweets, analysisId);
     console.log("ZIAD COMMENTS", comments);
     await saveFunnelComments(comments);
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
