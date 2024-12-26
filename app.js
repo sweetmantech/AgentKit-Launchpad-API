@@ -6,6 +6,7 @@ import getTikTokAnalysis from "./agents/getTikTokAnalysis.js";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 import getInstagramAnalysis from "./agents/getInstagramAnalysis.js";
+import getTwitterAnalysis from "./agents/getTwitterAnalysis.js";
 
 dotenv.config();
 
@@ -47,6 +48,16 @@ socketIo.on("connection", async (socket) => {
   socket.on("INSTAGRAM_ANALYSIS", (_, msg) => {
     if (msg?.handle && msg?.chat_id && msg?.account_id && msg?.address)
       getInstagramAnalysis(
+        msg?.handle,
+        msg?.chat_id,
+        msg?.account_id,
+        msg?.address,
+      );
+  });
+
+  socket.on("TWITTER_ANALYSIS", (_, msg) => {
+    if (msg?.handle && msg?.chat_id && msg?.account_id && msg?.address)
+      getTwitterAnalysis(
         msg?.handle,
         msg?.chat_id,
         msg?.account_id,
