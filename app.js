@@ -65,6 +65,16 @@ socketIo.on("connection", async (socket) => {
       );
   });
 
+  socket.on("SPOTIFY_ANALYSIS", (_, msg) => {
+    if (msg?.handle && msg?.chat_id && msg?.account_id && msg?.address)
+      getTwitterAnalysis(
+        msg?.handle,
+        msg?.chat_id,
+        msg?.account_id,
+        msg?.address,
+      );
+  });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
