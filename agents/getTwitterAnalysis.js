@@ -4,18 +4,6 @@ import { STEP_OF_ANALYSIS } from "../lib/step.js";
 
 const scraper = new Scraper();
 
-export const getProfile = async (req, res) => {
-  const { handle } = req.query;
-
-  try {
-    const profile = await scraper.getProfile(handle);
-    return res.status(200).json({ profile });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error });
-  }
-};
-
 const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
   try {
     const newAnalysis = await beginAnalysis(chat_id, handle);
@@ -23,7 +11,7 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.PROFILE);
     const profile = await scraper.getProfile(handle);
     console.log("ZIAD PROFILE", profile);
-    
+
     // const avatar = await uploadPfpToIpfs(profile.avatar);
     // const allTweets = await getAllTweets(scraper, handle);
     // const comments =  allTweets?.map((tweet) => ({
