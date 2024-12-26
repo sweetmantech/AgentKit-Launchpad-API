@@ -22,13 +22,13 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
     const scrappedProfile = await scraper.getProfile(handle);
     console.log("ZIAD PROFILE", scrappedProfile);
     const profile = {
-      avatar: profile.avatar,
-      bio: profile.biography,
-      followers: profile.followersCount,
-      followings: profile.followingCount,
-      name: profile.username,
-      nickname: profile.name,
-      region: profile.location,
+      avatar: scrappedProfile.avatar,
+      bio: scrappedProfile.biography,
+      followers: scrappedProfile.followersCount,
+      followings: scrappedProfile.followingCount,
+      name: scrappedProfile.username,
+      nickname: scrappedProfile.name,
+      region: scrappedProfile.location,
     };
     await updateAnalysisStatus(
       chat_id,
