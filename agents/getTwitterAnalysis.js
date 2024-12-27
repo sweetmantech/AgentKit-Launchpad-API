@@ -26,18 +26,6 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(
       chat_id,
       analysisId,
-      STEP_OF_ANALYSIS.POST_COMMENTS,
-    );
-    const allTweets = await getAllTweets(scraper, handle);
-    const comments = getTwitterComments(allTweets, analysisId);
-    await saveFunnelComments(comments);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
-    const segments = await getSegments(comments);
-    const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
-    await saveFunnelSegments(segmentsWithIcons);
-    await updateAnalysisStatus(
-      chat_id,
-      analysisId,
       STEP_OF_ANALYSIS.CREATING_ARTIST,
     );
     const newArtist = await saveFunnelArtist(
@@ -53,6 +41,25 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
       analysis_id: analysisId,
       artistId: newArtist.id,
     });
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      STEP_OF_ANALYSIS.CREATED_ARTIST,
+      0,
+      newArtist,
+    );
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      STEP_OF_ANALYSIS.POST_COMMENTS,
+    );
+    const allTweets = await getAllTweets(scraper, handle);
+    const comments = getTwitterComments(allTweets, analysisId);
+    await saveFunnelComments(comments);
+    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
+    const segments = await getSegments(comments);
+    const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
+    await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
