@@ -24,16 +24,6 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     const profile = accountData?.profile?.[0];
     const videoUrls = accountData?.videoUrls;
     const avatar = await uploadPfpToIpfs(profile.avatar);
-    const videoComments = await getVideoComments(
-      videoUrls,
-      chat_id,
-      analysisId,
-    );
-    await saveFunnelComments(videoComments);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
-    const segments = await getSegments(videoComments);
-    const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
-    await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
@@ -53,6 +43,23 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
       analysis_id: analysisId,
       artistId: newArtist.id,
     });
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      STEP_OF_ANALYSIS.CREATED_ARTIST,
+      0,
+      newArtist,
+    );
+    const videoComments = await getVideoComments(
+      videoUrls,
+      chat_id,
+      analysisId,
+    );
+    await saveFunnelComments(videoComments);
+    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
+    const segments = await getSegments(videoComments);
+    const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
+    await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,

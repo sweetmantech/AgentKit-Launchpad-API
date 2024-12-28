@@ -23,17 +23,6 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
     const accessToken = await getAccessToken();
     const data = await getProfile(handle, accessToken);
     const profile = data.profile;
-    const artistUri = data.artistId;
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.ALBUMS);
-    const albums = await getAlbums(artistUri, accessToken, analysisId);
-    await saveSpotifyAlbums(albums);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.TRACKS);
-    const tracks = await getTopTracks(artistUri, accessToken, analysisId);
-    await saveSpotifyTracks(tracks);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
-    const segments = await getSegments([...tracks, ...albums]);
-    const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
-    await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
@@ -52,6 +41,24 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
       analysis_id: analysisId,
       artistId: newArtist.id,
     });
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      STEP_OF_ANALYSIS.CREATED_ARTIST,
+      0,
+      newArtist,
+    );
+    const artistUri = data.artistId;
+    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.ALBUMS);
+    const albums = await getAlbums(artistUri, accessToken, analysisId);
+    await saveSpotifyAlbums(albums);
+    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.TRACKS);
+    const tracks = await getTopTracks(artistUri, accessToken, analysisId);
+    await saveSpotifyTracks(tracks);
+    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
+    const segments = await getSegments([...tracks, ...albums]);
+    const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
+    await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
