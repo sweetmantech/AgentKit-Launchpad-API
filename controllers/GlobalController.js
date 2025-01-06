@@ -36,12 +36,6 @@ export const get_social_handles = async (req, res) => {
   const { handle } = req.query;
   try {
     const query = `What is tiktok handle for ${handle}?`;
-    const result = await exa.searchAndContents(query, {
-      numResults: 100,
-      includeDomains: ["tiktok.com"],
-      useAutoprompt: true,
-      type: "keyword",
-    });
     const response = await tvly.search(query, {
       includeDomains: ["tiktok.com"],
       searchDepth: "advanced",
@@ -49,8 +43,11 @@ export const get_social_handles = async (req, res) => {
       includeAnswer: true,
       maxTokens: 1111,
     });
-    console.log("ZIAD HERE");
-    return res.status(200).json({ success: true, response, result });
+    const result = response.results.find(
+      (result) => result.search("https://www.tiktok.com/@") >= 0,
+    );
+    console.log("ZIAD HERE", result);
+    return res.status(200).json({ success: true, response });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error });
