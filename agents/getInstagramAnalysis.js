@@ -15,13 +15,13 @@ import getProfileDatasetId from "../lib/instagram/getProfileDatasetId.js";
 import getPostComments from "../lib/instagram/getPostComments.js";
 
 const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
+  const newAnalysis = await beginAnalysis(
+    chat_id,
+    handle,
+    Funnel_Type.INSTAGRAM,
+  );
+  const analysisId = newAnalysis.id;
   try {
-    const newAnalysis = await beginAnalysis(
-      chat_id,
-      handle,
-      Funnel_Type.INSTAGRAM,
-    );
-    const analysisId = newAnalysis.id;
     const profileDatasetId = await getProfileDatasetId(handle);
     await updateAnalysisStatus(
       chat_id,
@@ -98,6 +98,12 @@ const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
     return;
   } catch (error) {
     console.log(error);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.INSTAGRAM,
+      STEP_OF_ANALYSIS.ERROR,
+    );
     throw new Error(error);
   }
 };

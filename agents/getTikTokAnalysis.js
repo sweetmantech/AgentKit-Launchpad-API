@@ -15,13 +15,9 @@ import getProfileDatasetId from "../lib/tiktok/getProfileDatasetId.js";
 import getVideoComments from "../lib/tiktok/getVideoComments.js";
 
 const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
+  const newAnalysis = await beginAnalysis(chat_id, handle, Funnel_Type.TIKTOK);
+  const analysisId = newAnalysis.id;
   try {
-    const newAnalysis = await beginAnalysis(
-      chat_id,
-      handle,
-      Funnel_Type.TIKTOK,
-    );
-    const analysisId = newAnalysis.id;
     const profileDatasetId = await getProfileDatasetId(handle);
     await updateAnalysisStatus(
       chat_id,
@@ -98,6 +94,12 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     return;
   } catch (error) {
     console.log(error);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.TIKTOK,
+      STEP_OF_ANALYSIS.ERROR,
+    );
     throw new Error(error);
   }
 };

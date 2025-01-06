@@ -17,13 +17,9 @@ import getFormattedProfile from "../lib/twitter/getFormattedProfile.js";
 const scraper = new Scraper();
 
 const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
+  const newAnalysis = await beginAnalysis(chat_id, handle, Funnel_Type.TWITTER);
+  const analysisId = newAnalysis.id;
   try {
-    const newAnalysis = await beginAnalysis(
-      chat_id,
-      handle,
-      Funnel_Type.TWITTER,
-    );
-    const analysisId = newAnalysis.id;
     await updateAnalysisStatus(
       chat_id,
       analysisId,
@@ -99,6 +95,12 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
     return;
   } catch (error) {
     console.log(error);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.TWITTER,
+      STEP_OF_ANALYSIS.ERROR,
+    );
     throw new Error(error);
   }
 };
