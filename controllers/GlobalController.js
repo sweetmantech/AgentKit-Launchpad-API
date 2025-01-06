@@ -35,19 +35,29 @@ export const get_dataset_items = async (req, res) => {
 export const get_social_handles = async (req, res) => {
   const { handle } = req.query;
   try {
-    const query = `What is tiktok handle for ${handle}?`;
-    const response = await tvly.search(query, {
+    let query = `What is tiktok handle for ${handle}?`;
+    let response = await tvly.search(query, {
       includeDomains: ["tiktok.com"],
       searchDepth: "advanced",
       maxResults: 10,
       includeAnswer: true,
       maxTokens: 1111,
     });
-    const result = response.results.find(
+    let result = response.results.find(
       (result) => result.url.search("https://www.tiktok.com/@") >= 0,
     );
-    console.log("ZIAD HERE", result);
-    return res.status(200).json({ success: true, response });
+    const tiktokHandle = result.url.match(/@(\w+)/)[1]; 
+
+    query = `What is spotify handle for ${handle}?`;
+    response = await tvly.search(query, {
+      includeDomains: ["tiktok.com"],
+      searchDepth: "advanced",
+      maxResults: 10,
+      includeAnswer: true,
+      maxTokens: 1111,
+    });
+
+    return res.status(200).json({ success: true, response, tiktokHandle });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error });
