@@ -28,6 +28,7 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
     const accessToken = await getAccessToken();
     const data = await getProfile(handle, accessToken);
     const profile = data.profile;
+    const artistUri = data.artistId;
     await updateAnalysisStatus(
       chat_id,
       analysisId,
@@ -55,7 +56,6 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
       0,
       newArtist,
     );
-    const artistUri = data.artistId;
     await updateAnalysisStatus(
       chat_id,
       analysisId,
