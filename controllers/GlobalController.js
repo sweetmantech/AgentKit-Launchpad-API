@@ -38,8 +38,8 @@ export const get_social_handles = async (req, res) => {
     const socials = ["tiktok", "instagram", "twitter", "spotify"];
     const answers = [];
     const handlesPromise = socials.map(async (social) => {
-      let query = `What is ${social} handle for ${handle}?`;
-      let response = await tvly.search(query, {
+      const query = `What is ${social} handle for ${handle}?`;
+      const response = await tvly.search(query, {
         includeDomains: [`${social === "twitter" ? "x" : social}.com`],
         searchDepth: "advanced",
         maxResults: 10,
