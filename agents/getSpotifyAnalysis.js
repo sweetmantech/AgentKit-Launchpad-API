@@ -17,7 +17,11 @@ import saveSpotifyTracks from "../lib/supabase/saveSpotifyTracks.js";
 
 const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
   try {
-    const newAnalysis = await beginAnalysis(chat_id, handle);
+    const newAnalysis = await beginAnalysis(
+      chat_id,
+      handle,
+      Funnel_Type.SPOTIFY,
+    );
     const analysisId = newAnalysis.id;
     await updateAnalysisStatus(
       chat_id,

@@ -16,7 +16,11 @@ import getPostComments from "../lib/instagram/getPostComments.js";
 
 const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
   try {
-    const newAnalysis = await beginAnalysis(chat_id, handle);
+    const newAnalysis = await beginAnalysis(
+      chat_id,
+      handle,
+      Funnel_Type.INSTAGRAM,
+    );
     const analysisId = newAnalysis.id;
     const profileDatasetId = await getProfileDatasetId(handle);
     await updateAnalysisStatus(

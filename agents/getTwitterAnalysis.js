@@ -18,7 +18,11 @@ const scraper = new Scraper();
 
 const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
   try {
-    const newAnalysis = await beginAnalysis(chat_id, handle);
+    const newAnalysis = await beginAnalysis(
+      chat_id,
+      handle,
+      Funnel_Type.TWITTER,
+    );
     const analysisId = newAnalysis.id;
     await updateAnalysisStatus(
       chat_id,
