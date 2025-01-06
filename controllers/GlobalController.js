@@ -46,11 +46,12 @@ export const get_social_handles = async (req, res) => {
     let result = response.results.find(
       (result) => result.url.search("https://www.tiktok.com/@") >= 0,
     );
-    const tiktokHandle = result.url.match(/@(\w+)/)[1]; 
+
+    const tiktokHandle = result.url.match(/@(\w+)/)[1];
 
     query = `What is spotify handle for ${handle}?`;
     response = await tvly.search(query, {
-      includeDomains: ["tiktok.com"],
+      includeDomains: ["spotify.com"],
       searchDepth: "advanced",
       maxResults: 10,
       includeAnswer: true,
