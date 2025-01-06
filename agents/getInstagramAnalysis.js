@@ -14,7 +14,13 @@ import getProfile from "../lib/instagram/getProfile.js";
 import getProfileDatasetId from "../lib/instagram/getProfileDatasetId.js";
 import getPostComments from "../lib/instagram/getPostComments.js";
 
-const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
+const getInstagramAnalysis = async (
+  handle,
+  chat_id,
+  account_id,
+  address,
+  isWrapped,
+) => {
   const newAnalysis = await beginAnalysis(
     chat_id,
     handle,
@@ -87,7 +93,7 @@ const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
       handle,
       newArtist?.id,
       chat_id,
-      "Instagram",
+      isWrapped ? "Wrapped" : "Instagram",
     );
     await updateAnalysisStatus(
       chat_id,

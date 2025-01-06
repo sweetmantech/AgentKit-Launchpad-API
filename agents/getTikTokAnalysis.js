@@ -14,7 +14,13 @@ import getProfile from "../lib/tiktok/getProfile.js";
 import getProfileDatasetId from "../lib/tiktok/getProfileDatasetId.js";
 import getVideoComments from "../lib/tiktok/getVideoComments.js";
 
-const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
+const getTikTokAnalysis = async (
+  handle,
+  chat_id,
+  account_id,
+  address,
+  isWrapped,
+) => {
   const newAnalysis = await beginAnalysis(chat_id, handle, Funnel_Type.TIKTOK);
   const analysisId = newAnalysis.id;
   try {
@@ -83,7 +89,7 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
       handle,
       newArtist?.id,
       chat_id,
-      "TikTok",
+      isWrapped ? "Wrapped" : "TikTok",
     );
     await updateAnalysisStatus(
       chat_id,

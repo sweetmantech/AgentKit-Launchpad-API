@@ -43,6 +43,7 @@ socketIo.on("connection", async (socket) => {
         msg?.chat_id,
         msg?.account_id,
         msg?.address,
+        msg?.isWrapped,
       );
   });
 
@@ -53,6 +54,7 @@ socketIo.on("connection", async (socket) => {
         msg?.chat_id,
         msg?.account_id,
         msg?.address,
+        msg?.isWrapped,
       );
   });
 
@@ -63,6 +65,7 @@ socketIo.on("connection", async (socket) => {
         msg?.chat_id,
         msg?.account_id,
         msg?.address,
+        msg?.isWrapped,
       );
   });
 
@@ -73,6 +76,7 @@ socketIo.on("connection", async (socket) => {
         msg?.chat_id,
         msg?.account_id,
         msg?.address,
+        msg?.isWrapped,
       );
   });
 

@@ -84,7 +84,7 @@ const getTwitterAnalysis = async (handle, chat_id, account_id, address) => {
       handle,
       newArtist?.id,
       chat_id,
-      "Twitter",
+      isWrapped ? "Wrapped" : "Twitter",
     );
     await updateAnalysisStatus(
       chat_id,

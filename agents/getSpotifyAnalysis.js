@@ -15,7 +15,13 @@ import getTopTracks from "../lib/spotify/getTopTracks.js";
 import saveSpotifyAlbums from "../lib/supabase/saveSpotifyAlbums.js";
 import saveSpotifyTracks from "../lib/supabase/saveSpotifyTracks.js";
 
-const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
+const getSpotifyAnalysis = async (
+  handle,
+  chat_id,
+  account_id,
+  address,
+  isWrapped,
+) => {
   const newAnalysis = await beginAnalysis(chat_id, handle, Funnel_Type.SPOTIFY);
   const analysisId = newAnalysis.id;
   try {
@@ -92,7 +98,7 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
       handle,
       newArtist?.id,
       chat_id,
-      "Spotify",
+      isWrapped ? "Wrapped" : "Spotify",
     );
     await updateAnalysisStatus(
       chat_id,
