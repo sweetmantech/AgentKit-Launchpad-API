@@ -50,7 +50,33 @@ export const get_social_handles = async (req, res) => {
     });
 
     await Promise.all(handlesPromise);
-    return res.status(200).json({ success: true, answers });
+
+    const content = await getChatCompletions(
+      [
+        {
+          role: "user",
+          content: `
+        Context: ${JSON.stringify(answers)}
+        Question: Let me know the tiktok, spotify, twitter, instagram handles from given the context.`,
+        },
+        {
+          role: "system",
+          content: `Response should be in JSON format. {"data": [string, string, string, string]}.`,
+        },
+      ],
+      1111,
+    );
+
+    if (content)
+      return res.status(200).json({
+        data:
+          JSON.parse(
+            content
+              ?.replaceAll("\n", "")
+              ?.replaceAll("json", "")
+              ?.replaceAll("```", ""),
+          )?.data || [],
+      });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error });
