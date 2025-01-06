@@ -58,14 +58,13 @@ export const get_social_handles = async (req, res) => {
           content: `
         Context: ${JSON.stringify(answers)}
         Instruction: 
-          Let me know the tiktok, spotify, twitter, instagram handles in the given context.
-          Keep the handle order as tiktok, spotify, twitter, instagram.
+          Let me know the tiktok, instagram, twitter, spotify handles in the given context.
           Don't use Not available.
           Please make sure to make a handle.`,
         },
         {
           role: "system",
-          content: `Response should be in JSON format. {"data": [string, string, string, string]}.`,
+          content: `Response should be in JSON format. {"data": {"twitter": string, "instagram": string, "spotify": string, "tiktok": string}}.`,
         },
       ],
       1111,
