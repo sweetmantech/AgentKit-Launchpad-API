@@ -19,7 +19,12 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     const newAnalysis = await beginAnalysis(chat_id, handle);
     const analysisId = newAnalysis.id;
     const profileDatasetId = await getProfileDatasetId(handle);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.PROFILE);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.TIKTOK,
+      STEP_OF_ANALYSIS.PROFILE,
+    );
     const accountData = await getProfile(profileDatasetId);
     const profile = accountData?.profile?.[0];
     const videoUrls = accountData?.videoUrls;
@@ -27,6 +32,7 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.TIKTOK,
       STEP_OF_ANALYSIS.CREATING_ARTIST,
     );
     const newArtist = await saveFunnelArtist(
@@ -46,6 +52,7 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.TIKTOK,
       STEP_OF_ANALYSIS.CREATED_ARTIST,
       0,
       newArtist,
@@ -56,13 +63,19 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
       analysisId,
     );
     await saveFunnelComments(videoComments);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.TIKTOK,
+      STEP_OF_ANALYSIS.SEGMENTS,
+    );
     const segments = await getSegments(videoComments);
     const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
     await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.TIKTOK,
       STEP_OF_ANALYSIS.SAVING_ANALYSIS,
     );
     await trackFunnelAnalysisChat(
@@ -72,7 +85,12 @@ const getTikTokAnalysis = async (handle, chat_id, account_id, address) => {
       chat_id,
       "TikTok",
     );
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.FINISHED);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.TIKTOK,
+      STEP_OF_ANALYSIS.FINISHED,
+    );
     return;
   } catch (error) {
     console.log(error);
