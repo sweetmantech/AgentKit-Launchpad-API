@@ -44,7 +44,7 @@ export const get_social_handles = async (req, res) => {
       maxTokens: 1111,
     });
     const result = response.results.find(
-      (result) => result.search("https://www.tiktok.com/@") >= 0,
+      (result) => result.url.search("https://www.tiktok.com/@") >= 0,
     );
     console.log("ZIAD HERE", result);
     return res.status(200).json({ success: true, response });
