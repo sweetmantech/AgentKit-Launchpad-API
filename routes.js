@@ -36,6 +36,9 @@ routes.post('/get_instagram_comments', InstagramController.get_instagram_comment
 routes.get('/get_dataset_items', GlobalController.get_dataset_items);
 routes.get('/get_dataset_status', GlobalController.get_dataset_status);
 
+routes.get('/get_social_handles', GlobalController.get_social_handles);
+
+
 
 
 export default routes;
