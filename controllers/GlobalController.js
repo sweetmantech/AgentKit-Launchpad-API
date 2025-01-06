@@ -49,6 +49,7 @@ export const get_social_handles = async (req, res) => {
       includeAnswer: true,
       maxTokens: 1111,
     });
+    console.log("ZIAD HERE");
     return res.status(200).json({ success: true, response, result });
   } catch (error) {
     console.error(error);
