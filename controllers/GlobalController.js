@@ -29,3 +29,27 @@ export const get_dataset_items = async (req, res) => {
     return res.status(500).json({ error });
   }
 };
+
+export const get_social_handles = async (req, res) => {
+  const { handle } = req.query;
+  try {
+    const query = `What is tiktok handle for ${handle}?`;
+    const result = await exa.searchAndContents(query, {
+      numResults: 100,
+      includeDomains: ["tiktok.com"],
+      useAutoprompt: true,
+      type: "keyword",
+    });
+    const response = await tvly.search(query, {
+      includeDomains: ["tiktok.com"],
+      searchDepth: "advanced",
+      maxResults: 10,
+      includeAnswer: true,
+      maxTokens: 1111,
+    });
+    return res.status(200).json({ success: true, response, result });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error });
+  }
+};
