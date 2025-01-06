@@ -46,7 +46,7 @@ export const get_social_handles = async (req, res) => {
         includeAnswer: true,
         maxTokens: 1111,
       });
-      answers.push(response.answer);
+      answers.push(`${social.toUpperCase()}: ${response.answer}`);
     });
 
     await Promise.all(handlesPromise);
@@ -57,7 +57,11 @@ export const get_social_handles = async (req, res) => {
           role: "user",
           content: `
         Context: ${JSON.stringify(answers)}
-        Question: Let me know the tiktok, spotify, twitter, instagram handles from given the context.`,
+        Instruction: 
+          Let me know the tiktok, spotify, twitter, instagram handles in the given context.
+          Keep the handle order as tiktok, spotify, twitter, instagram.
+          Don't use Not available.
+          Please make sure to make a handle.`,
         },
         {
           role: "system",
