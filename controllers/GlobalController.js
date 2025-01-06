@@ -1,6 +1,6 @@
 import getActorStatus from "../lib/apify/getActorStatus.js";
 import getDataset from "../lib/apify/getDataset.js";
-import exa from "../lib/exa/client.js";
+import getChatCompletions from "../lib/getChatCompletions.js";
 import tvly from "../lib/tavily/client.js";
 
 export const get_dataset_status = async (req, res) => {
