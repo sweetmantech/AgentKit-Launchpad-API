@@ -17,7 +17,7 @@ export const get_full_report = async (req, res) => {
           role: "user",
           content: `
         Context: ${JSON.stringify(data)}
-        Question: Please, create a tiktok fan segment report.`,
+        Question: Please, create a fan segment report.`,
         },
         {
           role: "system",
@@ -31,8 +31,8 @@ export const get_full_report = async (req, res) => {
 
     sendReportEmail(
       content,
-      data?.funnel_analytics_profile?.[0]?.avatar,
-      data?.funnel_analytics_profile?.[0]?.nickname,
+      data?.artistImage,
+      data?.artistName,
       data?.email || "",
       `${data?.segment_name} Report`,
     );
