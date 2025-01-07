@@ -59,8 +59,7 @@ export const get_social_handles = async (req, res) => {
         Context: ${JSON.stringify(answers)}
         Instruction: 
           Let me know the tiktok, instagram, twitter, spotify handles in the given context.
-          Don't use Not available.
-          Please make sure to make a handle.`,
+          If the handle cannot be extracted, return an empty string.`,
         },
         {
           role: "system",
