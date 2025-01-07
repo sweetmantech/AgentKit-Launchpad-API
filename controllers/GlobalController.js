@@ -78,6 +78,7 @@ export const get_social_handles = async (req, res) => {
               ?.replaceAll("json", "")
               ?.replaceAll("```", ""),
           )?.data || [],
+        answers
       });
   } catch (error) {
     console.error(error);
