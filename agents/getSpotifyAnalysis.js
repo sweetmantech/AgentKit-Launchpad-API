@@ -15,17 +15,30 @@ import getTopTracks from "../lib/spotify/getTopTracks.js";
 import saveSpotifyAlbums from "../lib/supabase/saveSpotifyAlbums.js";
 import saveSpotifyTracks from "../lib/supabase/saveSpotifyTracks.js";
 
-const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
+const getSpotifyAnalysis = async (
+  handle,
+  chat_id,
+  account_id,
+  address,
+  isWrapped,
+) => {
+  const newAnalysis = await beginAnalysis(chat_id, handle, Funnel_Type.SPOTIFY);
+  const analysisId = newAnalysis.id;
   try {
-    const newAnalysis = await beginAnalysis(chat_id, handle);
-    const analysisId = newAnalysis.id;
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.PROFILE);
-    const accessToken = await getAccessToken();
-    const data = await getProfile(handle, accessToken);
-    const profile = data.profile;
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.SPOTIFY,
+      STEP_OF_ANALYSIS.PROFILE,
+    );
+    const accessToken = await getAccessToken();
+    const data = await getProfile(handle, accessToken);
+    const profile = data.profile;
+    const artistUri = data.artistId;
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.SPOTIFY,
       STEP_OF_ANALYSIS.CREATING_ARTIST,
     );
     const newArtist = await saveFunnelArtist(
@@ -44,24 +57,40 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.SPOTIFY,
       STEP_OF_ANALYSIS.CREATED_ARTIST,
       0,
       newArtist,
     );
-    const artistUri = data.artistId;
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.ALBUMS);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.SPOTIFY,
+      STEP_OF_ANALYSIS.ALBUMS,
+    );
     const albums = await getAlbums(artistUri, accessToken, analysisId);
     await saveSpotifyAlbums(albums);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.TRACKS);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.SPOTIFY,
+      STEP_OF_ANALYSIS.TRACKS,
+    );
     const tracks = await getTopTracks(artistUri, accessToken, analysisId);
     await saveSpotifyTracks(tracks);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.SPOTIFY,
+      STEP_OF_ANALYSIS.SEGMENTS,
+    );
     const segments = await getSegments([...tracks, ...albums]);
     const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
     await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.SPOTIFY,
       STEP_OF_ANALYSIS.SAVING_ANALYSIS,
     );
     await trackFunnelAnalysisChat(
@@ -69,12 +98,23 @@ const getSpotifyAnalysis = async (handle, chat_id, account_id, address) => {
       handle,
       newArtist?.id,
       chat_id,
-      "Spotify",
+      isWrapped ? "Wrapped" : "Spotify",
     );
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.FINISHED);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.SPOTIFY,
+      STEP_OF_ANALYSIS.FINISHED,
+    );
     return;
   } catch (error) {
     console.log(error);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.SPOTIFY,
+      STEP_OF_ANALYSIS.ERROR,
+    );
     throw new Error(error);
   }
 };

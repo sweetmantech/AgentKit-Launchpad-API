@@ -14,12 +14,27 @@ import getProfile from "../lib/instagram/getProfile.js";
 import getProfileDatasetId from "../lib/instagram/getProfileDatasetId.js";
 import getPostComments from "../lib/instagram/getPostComments.js";
 
-const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
+const getInstagramAnalysis = async (
+  handle,
+  chat_id,
+  account_id,
+  address,
+  isWrapped,
+) => {
+  const newAnalysis = await beginAnalysis(
+    chat_id,
+    handle,
+    Funnel_Type.INSTAGRAM,
+  );
+  const analysisId = newAnalysis.id;
   try {
-    const newAnalysis = await beginAnalysis(chat_id, handle);
-    const analysisId = newAnalysis.id;
     const profileDatasetId = await getProfileDatasetId(handle);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.PROFILE);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.INSTAGRAM,
+      STEP_OF_ANALYSIS.PROFILE,
+    );
     const accountData = await getProfile(profileDatasetId);
     const profile = accountData?.profile;
     const latestPosts = accountData?.latestPosts;
@@ -27,6 +42,7 @@ const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.INSTAGRAM,
       STEP_OF_ANALYSIS.CREATING_ARTIST,
     );
     const newArtist = await saveFunnelArtist(
@@ -46,6 +62,7 @@ const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.INSTAGRAM,
       STEP_OF_ANALYSIS.CREATED_ARTIST,
       0,
       newArtist,
@@ -56,13 +73,19 @@ const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
       analysisId,
     );
     await saveFunnelComments(postComments);
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.SEGMENTS);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.INSTAGRAM,
+      STEP_OF_ANALYSIS.SEGMENTS,
+    );
     const segments = await getSegments(postComments);
     const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
     await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
+      Funnel_Type.INSTAGRAM,
       STEP_OF_ANALYSIS.SAVING_ANALYSIS,
     );
     await trackFunnelAnalysisChat(
@@ -70,12 +93,23 @@ const getInstagramAnalysis = async (handle, chat_id, account_id, address) => {
       handle,
       newArtist?.id,
       chat_id,
-      "Instagram",
+      isWrapped ? "Wrapped" : "Instagram",
     );
-    await updateAnalysisStatus(chat_id, analysisId, STEP_OF_ANALYSIS.FINISHED);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.INSTAGRAM,
+      STEP_OF_ANALYSIS.FINISHED,
+    );
     return;
   } catch (error) {
     console.log(error);
+    await updateAnalysisStatus(
+      chat_id,
+      analysisId,
+      Funnel_Type.INSTAGRAM,
+      STEP_OF_ANALYSIS.ERROR,
+    );
     throw new Error(error);
   }
 };
