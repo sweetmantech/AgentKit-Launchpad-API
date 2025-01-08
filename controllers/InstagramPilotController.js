@@ -1,11 +1,28 @@
 import getInstagramAnalysis from "../agents/getInstagramAnalysis.js";
+import getSpotifyAnalysis from "../agents/getSpotifyAnalysis.js";
+import getTikTokAnalysis from "../agents/getTikTokAnalysis.js";
+import getTwitterAnalysis from "../agents/getTwitterAnalysis.js";
+import { Funnel_Type } from "../lib/funnels.js";
 
-export const run_instagram_agent = async (req, res) => {
+export const run_agent = async (req, res) => {
   try {
-    const { handle } = req.query;
+    const { handle, type } = req.query;
+    const agent_type = Object.values(Funnel_Type).find(
+      (value) => value === type,
+    );
+    if (!agent_type)
+      return res.status(500).json({ message: "Agent type is invalid." });
     const pilotId = uuidV4();
     res.status(200).json({ pilotId });
-    getInstagramAnalysis(handle, pilotId);
+    const isWrapped = type === "wrapped";
+    if (isWrapped || type === Funnel_Type.INSTAGRAM)
+      getInstagramAnalysis(handle, pilotId, null, null, isWrapped);
+    if (isWrapped || type === Funnel_Type.TWITTER)
+      getTwitterAnalysis(handle, pilotId, null, null, isWrapped);
+    if (isWrapped || type === Funnel_Type.TIKTOK)
+      getTikTokAnalysis(handle, pilotId, null, null, isWrapped);
+    if (isWrapped || type === Funnel_Type.SPOTIFY)
+      getSpotifyAnalysis(handle, pilotId, null, null, isWrapped);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error });
