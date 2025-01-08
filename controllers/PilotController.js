@@ -3,6 +3,7 @@ import getSpotifyAnalysis from "../agents/getSpotifyAnalysis.js";
 import getTikTokAnalysis from "../agents/getTikTokAnalysis.js";
 import getTwitterAnalysis from "../agents/getTwitterAnalysis.js";
 import { Funnel_Type } from "../lib/funnels.js";
+import { v4 as uuidV4 } from "uuid";
 
 export const run_agent = async (req, res) => {
   try {
