@@ -14,7 +14,7 @@ export const run_agent = async (req, res) => {
       return res.status(500).json({ message: "Agent type is invalid." });
     const pilotId = uuidV4();
     res.status(200).json({ pilotId });
-    const isWrapped = type === "wrapped";
+    const isWrapped = type === Funnel_Type.WRAPPED;
     if (isWrapped || type === Funnel_Type.INSTAGRAM)
       getInstagramAnalysis(handle, pilotId, null, null, isWrapped);
     if (isWrapped || type === Funnel_Type.TWITTER)
