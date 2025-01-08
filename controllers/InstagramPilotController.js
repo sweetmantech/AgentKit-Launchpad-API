@@ -5,7 +5,7 @@ import getProfile from "../lib/instagram/getProfile.js";
 import getProfileDatasetId from "../lib/instagram/getProfileDatasetId.js";
 import getPostComments from "../lib/instagram/getPostComments.js";
 
-export const run_tiktok_agent = async (req, res) => {
+export const run_instagram_agent = async (req, res) => {
   const { handle } = req.query;
   try {
     const profileDatasetId = await getProfileDatasetId(handle);
@@ -23,7 +23,8 @@ export const run_tiktok_agent = async (req, res) => {
         ...profile,
         avatar,
         segments: segmentsWithIcons,
-        comments: postComments,
+        comments: postComments.formattedData,
+        apifyDatasetId: postComments.datasetId,
       },
     });
   } catch (error) {

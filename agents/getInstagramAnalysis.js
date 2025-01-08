@@ -72,14 +72,14 @@ const getInstagramAnalysis = async (
       chat_id,
       analysisId,
     );
-    await saveFunnelComments(postComments);
+    await saveFunnelComments(postComments.formattedData);
     await updateAnalysisStatus(
       chat_id,
       analysisId,
       Funnel_Type.INSTAGRAM,
       STEP_OF_ANALYSIS.SEGMENTS,
     );
-    const segments = await getSegments(postComments);
+    const segments = await getSegments(postComments.formattedData);
     const segmentsWithIcons = await getSegmentsWithIcons(segments, analysisId);
     await saveFunnelSegments(segmentsWithIcons);
     await updateAnalysisStatus(
