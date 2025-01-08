@@ -44,6 +44,7 @@ export const run_instagram_agent = async (req, res) => {
       artistId: newArtist.id,
     });
     const commentDatasetId = await getPostCommentsDatasetId(latestPosts);
+    console.log("ZIAD commentDatasetId", commentDatasetId)
     const postComments = await getPostComments(
       commentDatasetId,
       pilotId,
@@ -71,6 +72,7 @@ export const run_instagram_agent = async (req, res) => {
       Funnel_Type.INSTAGRAM,
       STEP_OF_ANALYSIS.FINISHED,
     );
+    return
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error });
