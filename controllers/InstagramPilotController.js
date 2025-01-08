@@ -16,6 +16,7 @@ import saveFunnelComments from "../lib/supabase/saveFunnelComments.js";
 
 export const run_instagram_agent = async (req, res) => {
   const { handle } = req.query;
+
   const pilotId = uuidV4();
   const newAnalysis = await beginAnalysis(
     pilotId,
