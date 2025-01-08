@@ -614,13 +614,6 @@ cors@^2.8.5, cors@~2.8.5:
     object-assign "^4"
     vary "^1"
 
-cross-fetch@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-4.1.0.tgz#8f69355007ee182e47fa692ecbaa37a52e43c3d2"
-  integrity sha512-uKm5PU+MHTootlWEY+mZ4vvXoCn4fLQxT9dSc1sXVMSFkINTJVN8cAQROpwcKm8bJ/c7rgZVIBWzH5T78sNZZw==
-  dependencies:
-    node-fetch "^2.7.0"
-
 data-uri-to-buffer@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-4.0.1.tgz#d8feb2b2881e6a4f58c2e08acfd0e2834e26222e"
@@ -760,13 +753,6 @@ eventemitter3@5.0.1, eventemitter3@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
   integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
-
-exa-js@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/exa-js/-/exa-js-1.3.3.tgz#45d5ff3fa435a382b58d3b407c25552a7da66528"
-  integrity sha512-GynRF6cQt2FrrKUOzeJzBqBfURd7r80TFILUK+Na+XxkhGUjKWxpv7BRTraCTvgfJvGy+TYtp3b/SW6rteFaog==
-  dependencies:
-    cross-fetch "^4.0.0"
 
 express@^4.21.1:
   version "4.21.1"
@@ -1627,6 +1613,11 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
+
+uuid@^11.0.4:
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-11.0.4.tgz#37943977894ef806d2919a7ca3f89d6e23c60bac"
+  integrity sha512-IzL6VtTTYcAhA/oghbFJ1Dkmqev+FpQWnCBaKq/gUluLxliWvO8DPFWfIviRmYbtaavtSQe4WBL++rFjdcGWEg==
 
 uuid@^8.3.2:
   version "8.3.2"

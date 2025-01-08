@@ -15,6 +15,7 @@
   "dependencies": {
     "@stackso/js-core": "^0.5.10",
     "@supabase/supabase-js": "^2.47.9",
+    "@tavily/core": "^0.0.2",
     "agent-twitter-client": "^0.0.16",
     "apify-client": "^2.10.0",
     "axios": "^1.7.9",
@@ -27,6 +28,6 @@
     "openai": "^4.74.0",
     "prettier": "^3.4.1",
     "socket.io": "^4.8.1",
-    "@tavily/core": "^0.0.2"
+    "uuid": "^11.0.4"
   }
 }

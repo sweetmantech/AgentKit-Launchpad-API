@@ -13,6 +13,7 @@ import updateAnalysisStatus from "../lib/supabase/updateAnalysisStatus.js";
 import getProfile from "../lib/instagram/getProfile.js";
 import getProfileDatasetId from "../lib/instagram/getProfileDatasetId.js";
 import getPostComments from "../lib/instagram/getPostComments.js";
+import getPostCommentsDatasetId from "../lib/instagram/getPostCommentsDatasetId.js";
 
 const getInstagramAnalysis = async (
   handle,
@@ -67,8 +68,9 @@ const getInstagramAnalysis = async (
       0,
       newArtist,
     );
+    const commentsDatasetId = await getPostCommentsDatasetId(latestPosts);
     const postComments = await getPostComments(
-      latestPosts,
+      commentsDatasetId,
       chat_id,
       analysisId,
     );
@@ -88,13 +90,15 @@ const getInstagramAnalysis = async (
       Funnel_Type.INSTAGRAM,
       STEP_OF_ANALYSIS.SAVING_ANALYSIS,
     );
-    await trackFunnelAnalysisChat(
-      address,
-      handle,
-      newArtist?.id,
-      chat_id,
-      isWrapped ? "Wrapped" : "Instagram",
-    );
+    if (address) {
+      await trackFunnelAnalysisChat(
+        address,
+        handle,
+        newArtist?.id,
+        chat_id,
+        isWrapped ? "Wrapped" : "Instagram",
+      );
+    }
     await updateAnalysisStatus(
       chat_id,
       analysisId,
