@@ -40,5 +40,6 @@ routes.get('/get_dataset_status', GlobalController.get_dataset_status);
 routes.get('/get_social_handles', GlobalController.get_social_handles);
 
 routes.get('/autopilot/instagram' , TikTokPilotController.run_instagram_agent) ;
+routes.get('/autopilot' , GlobalController.get_autopilot) ;
 
 export default routes;
