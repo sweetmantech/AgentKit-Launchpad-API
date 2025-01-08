@@ -10,7 +10,6 @@ export const run_tiktok_agent = async (req, res) => {
   try {
     const profileDatasetId = await getProfileDatasetId(handle);
     const accountData = await getProfile(profileDatasetId);
-    console.log("ZIAD", accountData)
     const profile = accountData?.profile;
     const latestPosts = accountData?.latestPosts;
     const avatar = await uploadPfpToIpfs(profile.avatar);
@@ -24,6 +23,7 @@ export const run_tiktok_agent = async (req, res) => {
         ...profile,
         avatar,
         segments: segmentsWithIcons,
+        comments: postComments,
       },
     });
   } catch (error) {
