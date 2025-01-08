@@ -6,7 +6,7 @@ import * as TwitterController from "./controllers/TwitterController.js"
 import * as SpotifyController from "./controllers/SpotifyController.js"
 import * as InstagramController from "./controllers/InstagramController.js"
 import * as GlobalController from "./controllers/GlobalController.js"
-import * as TikTokPilotController from "./controllers/InstagramPilotController.js"
+import * as PilotController from "./controllers/PilotController.js"
 
 const routes = new Router();
 
@@ -39,7 +39,7 @@ routes.get('/get_dataset_status', GlobalController.get_dataset_status);
 
 routes.get('/get_social_handles', GlobalController.get_social_handles);
 
-routes.get('/autopilot/instagram' , TikTokPilotController.run_instagram_agent) ;
-routes.get('/autopilot' , GlobalController.get_autopilot) ;
+routes.get('/autopilot' , PilotController.run_agent) ;
+routes.get('/autopilot/status' , GlobalController.get_autopilot) ;
 
 export default routes;
