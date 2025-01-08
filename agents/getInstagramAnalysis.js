@@ -90,13 +90,15 @@ const getInstagramAnalysis = async (
       Funnel_Type.INSTAGRAM,
       STEP_OF_ANALYSIS.SAVING_ANALYSIS,
     );
-    await trackFunnelAnalysisChat(
-      address,
-      handle,
-      newArtist?.id,
-      chat_id,
-      isWrapped ? "Wrapped" : "Instagram",
-    );
+    if (address) {
+      await trackFunnelAnalysisChat(
+        address,
+        handle,
+        newArtist?.id,
+        chat_id,
+        isWrapped ? "Wrapped" : "Instagram",
+      );
+    }
     await updateAnalysisStatus(
       chat_id,
       analysisId,
