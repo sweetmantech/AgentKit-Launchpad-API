@@ -27,6 +27,6 @@ export const run_tiktok_agent = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    throw new Error(error);
+    return res.status(500).json({ error });
   }
 };
