@@ -30,5 +30,3 @@ export const run_tiktok_agent = async (req, res) => {
     throw new Error(error);
   }
 };
-
-export default getInstagramAnalysis;
