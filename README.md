@@ -1,13 +1,13 @@
-# AgentKit Launchpad APIs
+# 🚀 AgentKit Launchpad APIs
 
-## Getting Started
+## 🏁 Getting Started
 
-### Prerequisites
+### 📋 Prerequisites
 
 - Node.js (Latest LTS version recommended)
 - Yarn package manager
 
-### Installation
+### 🛠️ Installation
 
 1. Clone the repository
 
@@ -37,7 +37,7 @@ yarn start
 
 The server will start in development mode with hot-reload enabled.
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 .
