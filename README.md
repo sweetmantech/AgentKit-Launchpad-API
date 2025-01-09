@@ -5,7 +5,7 @@
 ### 📋 Prerequisites
 
 - Node.js (Latest LTS version recommended)
-- Yarn package manager
+- pnpm (Install with `npm install -g pnpm`)
 
 ### 🛠️ Installation
 
@@ -19,7 +19,7 @@ cd recoup-agent-apis
 2. Install dependencies
 
 ```bash
-yarn install
+pnpm install
 ```
 
 3. Set up environment variables
@@ -32,7 +32,7 @@ cp .env.example .env
 4. Start the development server
 
 ```bash
-yarn start
+pnpm start
 ```
 
 The server will start in development mode with hot-reload enabled.
@@ -53,5 +53,5 @@ The server will start in development mode with hot-reload enabled.
 ├── package.json
 ├── README.md
 ├── routes.js
-└── yarn.lock
+└── pnpm-lock.yaml
 ```
