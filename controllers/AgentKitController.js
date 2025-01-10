@@ -3,7 +3,7 @@ import runAutonomousMode from "../lib/AgentKit/runAutonomousMode.js";
 
 export const run = async (req, res) => {
   try {
-    console.log("Hello World");
+    console.log("STARTING AGENTKIT LAUNCHPAD AGENT");
     const { agent, config } = await initializeAgent();
     await runAutonomousMode(agent, config);
     res.json({
