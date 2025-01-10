@@ -13,6 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@coinbase/cdp-agentkit-core": "^0.0.10",
+    "@coinbase/cdp-langchain": "^0.0.11",
+    "@langchain/core": "^0.3.27",
+    "@langchain/langgraph": "^0.2.39",
+    "@langchain/openai": "^0.3.16",
     "@stackso/js-core": "^0.5.10",
     "@supabase/supabase-js": "^2.47.9",
     "body-parser": "^1.20.3",
