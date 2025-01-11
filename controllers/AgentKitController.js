@@ -8,11 +8,13 @@ export const run = async (req, res) => {
     await runAutonomousMode(agent, config);
     res.json({
       status: "success",
+      message: "Agent completed execution (33s timeout reached)",
     });
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error:", error.message);
-    }
-    process.exit(1);
+    console.error("Error:", error.message);
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
